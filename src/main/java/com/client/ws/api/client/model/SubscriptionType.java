@@ -7,22 +7,22 @@ import lombok.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "subscription_type")
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "subscriptions_type")
 public class SubscriptionType implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "subscription_type_id")
+    @Column(name = "subscriptions_type_id")
     private Long id;
 
     private String name;
 
-    @Column(name = "access_month")
+    @Column(name = "access_months")
     private Long accessMonth;
 
     private BigDecimal price;
