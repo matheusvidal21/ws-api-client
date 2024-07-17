@@ -19,8 +19,10 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private String phone;
@@ -28,7 +30,7 @@ public class User implements Serializable {
     private String cpf;
 
     @Column(name = "dt_subscription")
-    private LocalDate dtSubscription = LocalDate.now();
+    private LocalDate dtSubscription;
 
     @Column(name = "dt_expiration")
     private LocalDate dtExpiration;
@@ -38,7 +40,7 @@ public class User implements Serializable {
     private UserType userType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subscription_type_id")
+    @JoinColumn(name = "subscriptions_type_id")
     private SubscriptionType subscriptionType;
 
 }
