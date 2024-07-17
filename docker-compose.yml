@@ -10,9 +10,20 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: rasplus
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-data:/data/db
     networks:
       - mynetwork
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: raspay
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
 
 networks:
   mynetwork:
@@ -20,3 +31,4 @@ networks:
 
 volumes:
   mysql-data:
+  mongo-data:
