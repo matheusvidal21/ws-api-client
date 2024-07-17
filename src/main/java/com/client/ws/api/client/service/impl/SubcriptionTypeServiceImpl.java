@@ -3,6 +3,7 @@ package com.client.ws.api.client.service.impl;
 import com.client.ws.api.client.dto.SubscriptionTypeDto;
 import com.client.ws.api.client.exception.BadRequestException;
 import com.client.ws.api.client.exception.NotFoundException;
+import com.client.ws.api.client.mapper.SubscriptionTypeMapper;
 import com.client.ws.api.client.model.SubscriptionType;
 import com.client.ws.api.client.repository.SubscriptionTypeRepository;
 import com.client.ws.api.client.service.SubcriptionTypeService;
@@ -29,11 +30,7 @@ public class SubcriptionTypeServiceImpl implements SubcriptionTypeService {
 
     @Override
     public SubscriptionType findById(Long id) {
-        Optional<SubscriptionType> optionalSubscriptionType = subscriptionTypeRepository.findById(id);
-        if (optionalSubscriptionType.isEmpty()){
-             throw new NotFoundException("Subscription Type not found");
-        }
-        return optionalSubscriptionType.get();
+        return getSubscriptionType(id);
     }
 
     @Override
@@ -41,23 +38,27 @@ public class SubcriptionTypeServiceImpl implements SubcriptionTypeService {
         if (Objects.nonNull(dto.getId())) {
             throw new BadRequestException("Id must be null");
         }
-        return subscriptionTypeRepository.save(SubscriptionType.builder()
-                .id(null)
-                .name(dto.getName())
-                .accessMonth(dto.getAccessMonth())
-                .price(dto.getPrice())
-                .productKey(dto.getProductKey())
-                .build()
-        );
+        return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoToEntity(dto));
     }
 
     @Override
-    public SubscriptionType update(Long id, SubscriptionType subscriptionType) {
-        return null;
+    public SubscriptionType update(Long id, SubscriptionTypeDto dto) {
+        getSubscriptionType(id);
+        dto.setId(id);
+        return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoToEntity(dto));
     }
 
     @Override
     public void delete(Long id) {
+        getSubscriptionType(id);
+        subscriptionTypeRepository.deleteById(id);
+    }
 
+    private SubscriptionType getSubscriptionType(Long id) {
+        Optional<SubscriptionType> optionalSubscriptionType = subscriptionTypeRepository.findById(id);
+        if (optionalSubscriptionType.isEmpty()){
+            throw new NotFoundException("Subscription Type not found");
+        }
+        return optionalSubscriptionType.get();
     }
 }
