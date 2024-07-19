@@ -25,16 +25,16 @@ public class WsRaspayIntegrationImpl implements WsRaspayIntegration {
     private final HttpHeaders headers;
 
     @Value("${webservices.raspay.host}")
-    private static String WS_RASPAY_URL;
+    private String WS_RASPAY_URL;
 
     @Value("${webservices.raspay.v1.customer}")
-    private static String CUSTOMER_URL;
+    private String CUSTOMER_URL;
 
     @Value("${webservices.raspay.v1.order}")
-    private static String ORDER_URL;
+    private String ORDER_URL;
 
     @Value("${webservices.raspay.v1.payment}")
-    private static String PAYMENT_URL;
+    private String PAYMENT_URL;
 
     public WsRaspayIntegrationImpl() {
         this.restTemplate = new RestTemplate();

@@ -2,6 +2,7 @@ package com.client.ws.api.client.exception.handler;
 
 import com.client.ws.api.client.exception.BadRequestException;
 import com.client.ws.api.client.dto.error.ErrorResponse;
+import com.client.ws.api.client.exception.BusinessException;
 import com.client.ws.api.client.exception.NotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -49,5 +50,12 @@ public class ResourceHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex, WebRequest request) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
 
 }
