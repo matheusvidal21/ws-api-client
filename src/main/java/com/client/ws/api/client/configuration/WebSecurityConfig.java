@@ -39,8 +39,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(authorize -> authorize
-                    //    .requestMatchers("/subscription-type").permitAll()
-                    //    .requestMatchers(HttpMethod.GET, "/subscription-type/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/subscription-type").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/subscription-type/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/payment/process").permitAll()

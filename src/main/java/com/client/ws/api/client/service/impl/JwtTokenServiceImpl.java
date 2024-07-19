@@ -21,10 +21,10 @@ import java.util.Map;
 @Service
 public class JwtTokenServiceImpl implements JwtTokenService {
 
-    @Value("${jwt.secret}")
+    @Value("${webservices.rasplus.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${jwt.expiration}")
+    @Value("${webservices.rasplus.jwt.expiration}")
     private Long jwtExpiration;
 
     private SecretKey key;
