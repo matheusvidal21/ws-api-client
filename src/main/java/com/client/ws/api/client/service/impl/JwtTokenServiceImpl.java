@@ -1,6 +1,6 @@
 package com.client.ws.api.client.service.impl;
 
-import com.client.ws.api.client.model.UserCredentials;
+import com.client.ws.api.client.model.jpa.UserCredentials;
 import com.client.ws.api.client.service.JwtTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -10,13 +10,10 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class JwtTokenServiceImpl implements JwtTokenService {

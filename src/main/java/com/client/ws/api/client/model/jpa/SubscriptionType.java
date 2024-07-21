@@ -1,4 +1,4 @@
-package com.client.ws.api.client.model;
+package com.client.ws.api.client.model.jpa;
 
 
 import jakarta.persistence.*;

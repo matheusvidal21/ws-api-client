@@ -1,9 +1,9 @@
 package com.client.ws.api.client.mapper;
 
 import com.client.ws.api.client.dto.UserDto;
-import com.client.ws.api.client.model.SubscriptionType;
-import com.client.ws.api.client.model.User;
-import com.client.ws.api.client.model.UserType;
+import com.client.ws.api.client.model.jpa.SubscriptionType;
+import com.client.ws.api.client.model.jpa.User;
+import com.client.ws.api.client.model.jpa.UserType;
 
 public class UserMapper {
 

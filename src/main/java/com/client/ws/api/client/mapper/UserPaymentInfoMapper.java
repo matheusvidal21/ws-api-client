@@ -1,8 +1,8 @@
 package com.client.ws.api.client.mapper;
 
 import com.client.ws.api.client.dto.UserPaymentInfoDto;
-import com.client.ws.api.client.model.User;
-import com.client.ws.api.client.model.UserPaymentInfo;
+import com.client.ws.api.client.model.jpa.User;
+import com.client.ws.api.client.model.jpa.UserPaymentInfo;
 
 public class UserPaymentInfoMapper {
 

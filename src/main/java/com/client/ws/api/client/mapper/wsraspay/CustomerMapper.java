@@ -1,7 +1,7 @@
 package com.client.ws.api.client.mapper.wsraspay;
 
 import com.client.ws.api.client.dto.wsraspay.CustomerDto;
-import com.client.ws.api.client.model.User;
+import com.client.ws.api.client.model.jpa.User;
 
 public class CustomerMapper {
 

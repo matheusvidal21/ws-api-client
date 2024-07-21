@@ -1,17 +1,14 @@
 package com.client.ws.api.client.controller;
 
 import com.client.ws.api.client.dto.SubscriptionTypeDto;
-import com.client.ws.api.client.model.SubscriptionType;
+import com.client.ws.api.client.model.jpa.SubscriptionType;
 import com.client.ws.api.client.service.SubcriptionTypeService;
 import jakarta.validation.Valid;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/subscription-type")

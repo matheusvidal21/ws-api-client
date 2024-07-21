@@ -1,11 +1,5 @@
 package com.client.ws.api.client.dto;
 
-import com.client.ws.api.client.model.SubscriptionType;
-import com.client.ws.api.client.model.UserType;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

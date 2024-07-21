@@ -4,14 +4,17 @@ import com.client.ws.api.client.dto.UserDto;
 import com.client.ws.api.client.exception.BadRequestException;
 import com.client.ws.api.client.exception.NotFoundException;
 import com.client.ws.api.client.mapper.UserMapper;
-import com.client.ws.api.client.model.User;
-import com.client.ws.api.client.model.UserType;
-import com.client.ws.api.client.repository.UserRepository;
-import com.client.ws.api.client.repository.UserTypeRepository;
+import com.client.ws.api.client.model.jpa.User;
+import com.client.ws.api.client.model.jpa.UserType;
+import com.client.ws.api.client.model.redis.UserRecoveryCode;
+import com.client.ws.api.client.repository.jpa.UserRepository;
+import com.client.ws.api.client.repository.jpa.UserTypeRepository;
+import com.client.ws.api.client.repository.redis.UserRecoveryCodeRepository;
 import com.client.ws.api.client.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Random;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,4 +45,5 @@ public class UserServiceImpl implements UserService {
 
        return userRepository.save(UserMapper.fromDtoToEntity(dto, userType, null));
     }
+
 }
