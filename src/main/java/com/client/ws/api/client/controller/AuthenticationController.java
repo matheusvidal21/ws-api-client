@@ -4,15 +4,11 @@ import com.client.ws.api.client.dto.LoginDto;
 import com.client.ws.api.client.dto.TokenDto;
 import com.client.ws.api.client.model.redis.UserRecoveryCode;
 import com.client.ws.api.client.service.AuthenticationService;
-import com.client.ws.api.client.service.JwtTokenService;
 import com.client.ws.api.client.service.impl.UserDetailsServiceImpl;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -35,6 +31,11 @@ public class AuthenticationController {
     public ResponseEntity<Void> sendRecoveryCode(@RequestBody @Valid UserRecoveryCode userRecoveryCode){
         userDetailsService.sendRecoveryCode(userRecoveryCode.getEmail());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/recovery-code")
+    public ResponseEntity<?> recoveryCodeIsvalid(@RequestParam("code") String code, @RequestParam("email") String email){
+        return ResponseEntity.ok(userDetailsService.recoveryCodeIsValid(code, email));
     }
 
 }

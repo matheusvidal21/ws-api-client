@@ -6,6 +6,7 @@ import com.client.ws.api.client.model.redis.UserRecoveryCode;
 import com.client.ws.api.client.repository.jpa.UserDetailsRepository;
 import com.client.ws.api.client.repository.redis.UserRecoveryCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +17,10 @@ import java.util.Random;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
+    @Value("${webservices.rasplus.redis.recoverycode.timeout.minutes}")
+    private String recoveryCodeTimeout;
+
 
     private final UserDetailsRepository userDetailsRepository;
     private final UserRecoveryCodeRepository userRecoveryCodeRepository;
@@ -57,5 +62,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRecoveryCodeRepository.save(userRecoveryCode);
         this.mailIntegration.send(email, "Recovery code", "Your recovery code is: " + code);
     }
+
+    public Boolean recoveryCodeIsValid(String code, String email){
+        UserRecoveryCode userRecoveryCode = this.userRecoveryCodeRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
+
+        LocalDateTime timeout = userRecoveryCode.getCreatedAt().plusMinutes(Long.parseLong(recoveryCodeTimeout));
+        LocalDateTime now = LocalDateTime.now();
+
+        if (now.isAfter(timeout))
+            return false;
+
+        return code.equals(userRecoveryCode.getCode());
+    }
+
 
 }

@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/subscription-type").permitAll()
                         .requestMatchers(HttpMethod.GET, "/subscription-type/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
+                        .requestMatchers( "/auth/recovery-code*").permitAll()
                         .requestMatchers( "/auth/recovery-code/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/payment/process").permitAll()
