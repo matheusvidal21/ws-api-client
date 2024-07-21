@@ -2,6 +2,7 @@ package com.client.ws.api.client.controller;
 
 import com.client.ws.api.client.dto.LoginDto;
 import com.client.ws.api.client.dto.TokenDto;
+import com.client.ws.api.client.dto.UserDetailsDto;
 import com.client.ws.api.client.model.redis.UserRecoveryCode;
 import com.client.ws.api.client.service.AuthenticationService;
 import com.client.ws.api.client.service.impl.UserDetailsServiceImpl;
@@ -30,12 +31,18 @@ public class AuthenticationController {
     @PostMapping("/recovery-code/send")
     public ResponseEntity<Void> sendRecoveryCode(@RequestBody @Valid UserRecoveryCode userRecoveryCode){
         userDetailsService.sendRecoveryCode(userRecoveryCode.getEmail());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/recovery-code")
     public ResponseEntity<?> recoveryCodeIsvalid(@RequestParam("code") String code, @RequestParam("email") String email){
         return ResponseEntity.ok(userDetailsService.recoveryCodeIsValid(code, email));
+    }
+
+    @PatchMapping("/recovery-code/password")
+    public ResponseEntity<Void> updatePassword(@RequestBody @Valid UserDetailsDto userDetailsDto){
+        userDetailsService.updatePasswordByRecoveryCode(userDetailsDto);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -17,6 +17,7 @@ import com.client.ws.api.client.mapper.wsraspay.PaymentMapper;
 import com.client.ws.api.client.model.jpa.*;
 import com.client.ws.api.client.repository.jpa.*;
 import com.client.ws.api.client.service.PaymentInfoService;
+import com.client.ws.api.client.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -74,7 +75,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
 
             UserType userType = this.userTypeRepository.findById(UserTypeEnum.STUDENT.getId()).orElseThrow(() -> new NotFoundException("User type not found"));
 
-            UserCredentials userCredentials = new UserCredentials(null, user.getEmail().trim(), new BCryptPasswordEncoder().encode(defaultPassword), userType);
+            UserCredentials userCredentials = new UserCredentials(null, user.getEmail().trim(), PasswordUtils.encode(defaultPassword), userType);
             this.userDetailsRepository.save(userCredentials);
 
             SubscriptionType subscriptionType = this.subscriptionTypeRepository.findByProductKey(paymentProcessDto.getProductKey()).orElseThrow(() -> new NotFoundException("Subscription type not found"));

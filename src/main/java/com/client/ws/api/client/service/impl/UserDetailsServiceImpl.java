@@ -1,15 +1,18 @@
 package com.client.ws.api.client.service.impl;
 
+import com.client.ws.api.client.dto.UserDetailsDto;
 import com.client.ws.api.client.exception.NotFoundException;
 import com.client.ws.api.client.integration.MailIntegration;
 import com.client.ws.api.client.model.redis.UserRecoveryCode;
 import com.client.ws.api.client.repository.jpa.UserDetailsRepository;
 import com.client.ws.api.client.repository.redis.UserRecoveryCodeRepository;
+import com.client.ws.api.client.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -75,5 +78,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return code.equals(userRecoveryCode.getCode());
     }
 
+    public void updatePasswordByRecoveryCode(UserDetailsDto dto){
+        if (recoveryCodeIsValid(dto.getRecoveryCode(), dto.getEmail())){
+            var userDetails = userDetailsRepository.findByUsername(dto.getEmail()).orElseThrow(() -> new NotFoundException("User not found"));
+            userDetails.setPassword(PasswordUtils.encode(dto.getPassword()));
+            userDetailsRepository.save(userDetails);
+            this.mailIntegration.send(dto.getEmail(), "Password updated", "Your password has been updated");
+        }
+    }
 
 }
