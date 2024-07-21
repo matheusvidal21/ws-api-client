@@ -24,17 +24,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public TokenDto auth(LoginDto dto) {
-        var userPassAuth = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
-
         try{
-            Authentication auth = authenticationManager.authenticate(userPassAuth);
+            var authentication = new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword());
+            Authentication auth = authenticationManager.authenticate(authentication);
             String token = jwtTokenService.generateToken(auth);
             return TokenDto.builder()
                     .token(token)
                     .type("Bearer")
                     .build();
         } catch (Exception e) {
-            throw new BadRequestException("error when trying to format the token\n");
+            throw new BadRequestException("error when trying to format the token: " + e.getMessage());
         }
     }
 }

@@ -8,6 +8,8 @@ import com.client.ws.api.client.model.SubscriptionType;
 import com.client.ws.api.client.repository.SubscriptionTypeRepository;
 import com.client.ws.api.client.service.SubcriptionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,16 +26,19 @@ public class SubcriptionTypeServiceImpl implements SubcriptionTypeService {
     }
 
     @Override
+    @Cacheable("subscriptionType")
     public List<SubscriptionType> findAll() {
         return subscriptionTypeRepository.findAll();
     }
 
     @Override
+    @Cacheable(value = "subscriptionType", key = "#id")
     public SubscriptionType findById(Long id) {
         return getSubscriptionType(id);
     }
 
     @Override
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     public SubscriptionType create(SubscriptionTypeDto dto) {
         if (Objects.nonNull(dto.getId())) {
             throw new BadRequestException("Id must be null");
@@ -42,6 +47,7 @@ public class SubcriptionTypeServiceImpl implements SubcriptionTypeService {
     }
 
     @Override
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     public SubscriptionType update(Long id, SubscriptionTypeDto dto) {
         getSubscriptionType(id);
         dto.setId(id);
@@ -49,6 +55,7 @@ public class SubcriptionTypeServiceImpl implements SubcriptionTypeService {
     }
 
     @Override
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     public void delete(Long id) {
         getSubscriptionType(id);
         subscriptionTypeRepository.deleteById(id);

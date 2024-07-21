@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   mysql:
-    image: mysql:8.0  # Use uma versão estável do MySQL, não a 9.0.0
+    image: mysql:8.0
     ports:
       - "3307:3306"
     restart: always
@@ -13,6 +13,7 @@ services:
       - mysql-data:/data/db
     networks:
       - mynetwork
+
   mongo:
     image: mongo
     restart: always
@@ -24,6 +25,14 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+        - "6379:6379"
+    networks:
+        - mynetwork
 
 networks:
   mynetwork:

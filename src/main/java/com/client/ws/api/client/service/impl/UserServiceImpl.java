@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
            throw new NotFoundException("User type not found");
        }
 
-        UserType userType = userTypeOpt.get();
+       UserType userType = userTypeOpt.get();
 
        return userRepository.save(UserMapper.fromDtoToEntity(dto, userType, null));
     }
